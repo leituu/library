@@ -98,17 +98,25 @@ function UI() {
 
 
 function Library() {
-    this.books = [{bookName: 'El se;or de los anillos: las dos torres', bookAuthor: 'J.R.R Tolkien', bookPages: '1234', bookRead: false},
-    {bookName: 'El se;or de los anillos: el retorno del rey', bookAuthor: 'J.R.R Tolkien', bookPages: '1234', bookRead: true},
-    {bookName: 'Harry Potter y la camara Secreta', bookAuthor: 'J.R.R Tolkien', bookPages: '1234', bookRead: true},
-    {bookName: 'Harry Potter y las reliquias de la muerte', bookAuthor: 'J.R.R Tolkien', bookPages: '1234', bookRead: false}]
+    // this.books = [{bookName: 'El se;or de los anillos: las dos torres', bookAuthor: 'J.R.R Tolkien', bookPages: '1234', bookRead: false},
+    // {bookName: 'El se;or de los anillos: el retorno del rey', bookAuthor: 'J.R.R Tolkien', bookPages: '1234', bookRead: true},
+    // {bookName: 'Harry Potter y la camara Secreta', bookAuthor: 'J.R.R Tolkien', bookPages: '1234', bookRead: true},
+    // {bookName: 'Harry Potter y las reliquias de la muerte', bookAuthor: 'J.R.R Tolkien', bookPages: '1234', bookRead: false}]
+
+    if (localStorage.getItem('library') === null) {
+        this.books = [];
+    } else {
+        this.books = JSON.parse(localStorage.getItem('library'));
+    }
     
     this.addBook = function (book) {
         this.books.push(book);
+        localStorage.setItem('library', JSON.stringify(this.books));
     }
 
     this.removeBook = function (idx) {
         this.books.splice(idx, 1);
+        localStorage.setItem('library', JSON.stringify(this.books));
     }
 
     this.updateBook = function (idx) {
