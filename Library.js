@@ -24,13 +24,6 @@ function Library() {
             this.books[idx].bookRead = true;
         };   
         }
-
-    return {
-        books: this.books,
-        addBook: this.addBook,
-        removeBook: this.removeBook,
-        updateBook: this.updateBook
-    }
 }
 
 export { Library };

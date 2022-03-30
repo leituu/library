@@ -75,14 +75,6 @@ function UI() {
             bookCard.setAttribute('data-index', idx);
         });     
     }
-    
-    return {
-        renderBooks: this.renderBooks
-        , removeBook: this.removeBook
-        , addBook: this.addBook
-        , updateBook: this.updateBook
-        , showForm: this.showForm
-    }
 }
 
 export { UI };
