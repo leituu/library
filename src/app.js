@@ -11,6 +11,7 @@ const addBookFormBtn = document.querySelector("#addBook");
 const closeFormBtn = document.querySelector(".close-btn");
 
 document.addEventListener("DOMContentLoaded", () => {
+  // when we load the page, we want to show all the books (from the localStorage, if there are any)
   UI.renderBooks(library.books);
 });
 
