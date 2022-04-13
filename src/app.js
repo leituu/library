@@ -1,6 +1,7 @@
 import { UI } from "./UI.js";
 import { Library } from "./Library.js";
 import { Book } from "./Book.js";
+import "./style.css";
 
 let library = new Library();
 // let UI = new UI();

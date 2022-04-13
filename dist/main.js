@@ -1,116 +1,404 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./src/Book.js":
-/*!*********************!*\
-  !*** ./src/Book.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Book\": () => (/* binding */ Book)\n/* harmony export */ });\nclass Book {\n  constructor(name, author, pages, read = false) {\n    this.bookName = name;\n    this.bookAuthor = author;\n    this.bookPages = pages;\n    this.bookRead = read;\n  }\n}\n\n\n\n\n//# sourceURL=webpack://librarywebpack/./src/Book.js?");
-
-/***/ }),
-
-/***/ "./src/Library.js":
-/*!************************!*\
-  !*** ./src/Library.js ***!
-  \************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Library\": () => (/* binding */ Library)\n/* harmony export */ });\nclass Library {\n  constructor() {\n    if (localStorage.getItem(\"library\") === null) {\n      this.books = [];\n      localStorage.setItem(\"library\", JSON.stringify(this.books));\n    } else {\n      this.books = JSON.parse(localStorage.getItem(\"library\"));\n    }\n  }\n\n  addBook(book) {\n    this.books.push(book);\n    localStorage.setItem(\"library\", JSON.stringify(this.books));\n  }\n\n  removeBook(idx) {\n    this.books.splice(idx, 1);\n    localStorage.setItem(\"library\", JSON.stringify(this.books));\n  }\n\n  updateBook(idx) {\n    if (this.books[idx].bookRead) {\n      this.books[idx].bookRead = false;\n    } else {\n      this.books[idx].bookRead = true;\n    }\n  }\n}\n\n\n\n\n//# sourceURL=webpack://librarywebpack/./src/Library.js?");
-
-/***/ }),
-
-/***/ "./src/UI.js":
-/*!*******************!*\
-  !*** ./src/UI.js ***!
-  \*******************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"UI\": () => (/* binding */ UI)\n/* harmony export */ });\nclass UI {\n  static renderBooks(library) {\n    const bookContainer = document.querySelector(\".book-container\");\n    bookContainer.innerHTML = \"\";\n    let fragment = document.createDocumentFragment();\n    library.forEach(function (book, idx) {\n      let bookCard = document.createElement(\"div\");\n      bookCard.setAttribute(\"class\", \"book-card d-flex flex-column\");\n      bookCard.setAttribute(\"data-index\", idx);\n      bookCard.innerHTML = `\n                <div class=\"book-title pt-3 px-2 fw-bold text-center lh-sm fs-5\">${\n                  book.bookName\n                }</div>\n                <div class=\"book-author pt-2 px-2 text-center\">${\n                  book.bookAuthor\n                }</div>\n                <div class=\"book-pages pt-1 px-2 text-center fst-italic  text-muted\">${\n                  book.bookPages\n                } pages</div>\n                <div class=\"book-options d-flex justify-content-between py-3\">\n                    <span class=\"material-icons-outlined ms-3 read-mark\">\n                        ${book.bookRead ? \"done\" : \"remove_red_eye\"}\n                    </span>                    \n                    <span class=\"material-icons-outlined me-3 delete\">\n                        delete\n                    </span>\n                </div>`;\n      fragment.appendChild(bookCard);\n    });\n    bookContainer.appendChild(fragment);\n  }\n\n  static addBook(book, library) {\n    const bookContainer = document.querySelector(\".book-container\");\n    const bookCard = document.createElement(\"div\");\n    bookCard.setAttribute(\"class\", \"book-card d-flex flex-column\");\n    if (library.books.length === 0) {\n      bookCard.setAttribute(\"data-index\", 0);\n    }\n    bookCard.setAttribute(\"data-index\", library.books.length);\n    bookCard.innerHTML = `\n                <div class=\"book-title pt-3 px-2 fw-bold text-center lh-sm fs-5\">${\n                  book.bookName\n                }</div>\n                <div class=\"book-author pt-2 px-2 text-center\">${\n                  book.bookAuthor\n                }</div>\n                <div class=\"book-pages pt-1 px-2 text-center fst-italic  text-muted\">${\n                  book.bookPages\n                } pages</div>\n                <div class=\"book-options d-flex justify-content-between py-3\">\n                    <span class=\"material-icons-outlined ms-3 read-mark\">\n                        ${book.bookRead ? \"done\" : \"remove_red_eye\"}\n                    </span>                    \n                    <span class=\"material-icons-outlined me-3 delete\">\n                        delete\n                    </span>\n                </div>`;\n    bookContainer.appendChild(bookCard);\n  }\n\n  static removeBook(book) {\n    const bookContainer = document.querySelector(\".book-container\");\n    bookContainer.removeChild(book);\n    UI.updateIdx();\n  }\n\n  static updateBook(status) {\n    if (status.innerText == \"remove_red_eye\") {\n      status.innerText = \"done\";\n      return;\n    } else {\n      status.innerText = \"remove_red_eye\";\n      return;\n    }\n  }\n\n  static showForm() {\n    const form = document.querySelector(\".form-container\");\n    form.classList.toggle(\"d-none\");\n  }\n\n  static updateIdx() {\n    const bookContainer = document.querySelector(\".book-container\");\n    const bookCards = bookContainer.querySelectorAll(\".book-card\");\n    bookCards.forEach(function (bookCard, idx) {\n      bookCard.setAttribute(\"data-index\", idx);\n    });\n  }\n}\n\n\n\n\n//# sourceURL=webpack://librarywebpack/./src/UI.js?");
-
-/***/ }),
-
-/***/ "./src/app.js":
-/*!********************!*\
-  !*** ./src/app.js ***!
-  \********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _UI_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UI.js */ \"./src/UI.js\");\n/* harmony import */ var _Library_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Library.js */ \"./src/Library.js\");\n/* harmony import */ var _Book_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Book.js */ \"./src/Book.js\");\n\n\n\n\nlet library = new _Library_js__WEBPACK_IMPORTED_MODULE_1__.Library();\n// let UI = new UI();\n\n// button add new book\nconst addBookBtn = document.querySelector(\"#openForm\");\nconst addBookFormBtn = document.querySelector(\"#addBook\");\nconst closeFormBtn = document.querySelector(\".close-btn\");\n\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n  // when we load the page, we want to show all the books (from the localStorage, if there are any)\n  _UI_js__WEBPACK_IMPORTED_MODULE_0__.UI.renderBooks(library.books);\n});\n\naddBookBtn.addEventListener(\"click\", function () {\n  _UI_js__WEBPACK_IMPORTED_MODULE_0__.UI.showForm();\n});\n\ncloseFormBtn.addEventListener(\"click\", () => {\n  _UI_js__WEBPACK_IMPORTED_MODULE_0__.UI.showForm();\n});\n\naddBookFormBtn.addEventListener(\"click\", function () {\n  let bookName = document.querySelector(\"#bookName\").value;\n  let bookAuthor = document.querySelector(\"#bookAuthor\").value;\n  let bookPages = document.querySelector(\"#bookPages\").value;\n  let bookRead = document.querySelector(\"#bookRead\").checked;\n  let book = new _Book_js__WEBPACK_IMPORTED_MODULE_2__.Book(bookName, bookAuthor, bookPages, bookRead);\n\n  _UI_js__WEBPACK_IMPORTED_MODULE_0__.UI.addBook(book, library);\n  library.addBook(book);\n  _UI_js__WEBPACK_IMPORTED_MODULE_0__.UI.showForm();\n});\n\ndocument.addEventListener(\"click\", (e) => {\n  if (e.target.classList.contains(\"delete\")) {\n    let book = e.target.parentElement.parentElement;\n    _UI_js__WEBPACK_IMPORTED_MODULE_0__.UI.removeBook(book);\n    library.removeBook(book.getAttribute(\"data-index\"));\n  }\n});\n\ndocument.addEventListener(\"click\", (e) => {\n  if (e.target.classList.contains(\"read-mark\")) {\n    let book = e.target.parentElement.parentElement;\n    let status = e.target;\n    _UI_js__WEBPACK_IMPORTED_MODULE_0__.UI.updateBook(status);\n    library.updateBook(book.getAttribute(\"data-index\"));\n  }\n});\n\n// export { library };\n\n\n//# sourceURL=webpack://librarywebpack/./src/app.js?");
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/app.js");
-/******/ 	
-/******/ })()
-;
+(() => {
+  "use strict";
+  var e = {
+      426: (e, n, t) => {
+        t.d(n, { Z: () => s });
+        var o = t(81),
+          r = t.n(o),
+          a = t(645),
+          i = t.n(a)()(r());
+        i.push([
+          e.id,
+          "* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\nheader nav {\n  height: 100px;\n  box-shadow: 0px 3px 8px rgb(128, 128, 128, 0.4);\n}\n\nmain {\n  overflow: auto;\n  min-height: calc(100vh - 150px);\n  width: 100%;\n}\n\n.form-container {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100vh;\n  width: 100vw;\n  background-color: rgba(0, 0, 0, 0.151);\n  backdrop-filter: blur(2px);\n}\n\nform {\n  position: relative;\n  width: 300px;\n  height: fit-content;\n  top: 50%;\n  left: 50%;\n  transform: translateY(-80%) translateX(-50%);\n  z-index: 999;\n  background-color: rgb(168, 164, 164);\n  border-radius: 10px;\n  box-shadow: 0 0px 15px 8px rgb(0 0 0 / 19%),\n    inset 0 0px 15px 8px rgba(0, 0, 0, 0.226);\n}\n\n.close-btn span {\n  cursor: pointer;\n}\n\n.form-control:focus {\n  border-color: transparent !important;\n  box-shadow: none !important;\n}\n\n.form-check-input {\n  border-color: transparent !important;\n  box-shadow: none !important;\n}\n\n#openForm {\n  background-color: rgb(190, 190, 190);\n}\n\n#openForm:hover {\n  background-color: rgb(212, 212, 212);\n  box-shadow: 0 0px 4px 1px rgba(168, 168, 168, 0.555),\n    inset 0 0px 5px 1px rgba(255, 255, 255, 0.555);\n  /* color:#FFF; */\n}\n\n#openForm:focus {\n  background-color: rgb(212, 212, 212);\n  box-shadow: 0 0px 4px 1px rgba(168, 168, 168, 0.555),\n    inset 0 0px 5px 1px rgba(255, 255, 255, 0.555);\n  outline: none !important;\n}\n\n.book-container {\n  width: calc(200px * 4);\n  margin: auto;\n}\n\n.book-card {\n  background-color: rgb(185, 184, 187);\n  height: 200px;\n  width: 180px;\n  margin: 10px;\n  border-radius: 4px;\n  box-shadow: inset 0 0px 15px 8px rgba(0, 0, 0, 0.178),\n    0 0px 10px 3px rgba(0, 0, 0, 0.233);\n}\n\n.book-card {\n  word-break: keep-all;\n}\n\n.book-options {\n  margin-top: auto;\n}\n\n.delete:hover {\n  cursor: pointer;\n  color: rgb(255, 255, 255);\n}\n\n.read-mark:hover {\n  cursor: pointer;\n  color: rgb(255, 255, 255);\n}\n\nfooter {\n  height: 50px;\n}\n\n@media screen and (max-width: 800px) {\n  .book-container {\n    width: calc(200px * 3);\n  }\n}\n\n@media screen and (max-width: 530px) {\n  .book-container {\n    width: calc(200px * 2);\n  }\n}\n\n@media screen and (max-width: 391px) {\n  .book-container {\n    width: calc(200px * 1);\n  }\n}\n",
+          "",
+        ]);
+        const s = i;
+      },
+      645: (e) => {
+        e.exports = function (e) {
+          var n = [];
+          return (
+            (n.toString = function () {
+              return this.map(function (n) {
+                var t = "",
+                  o = void 0 !== n[5];
+                return (
+                  n[4] && (t += "@supports (".concat(n[4], ") {")),
+                  n[2] && (t += "@media ".concat(n[2], " {")),
+                  o &&
+                    (t += "@layer".concat(
+                      n[5].length > 0 ? " ".concat(n[5]) : "",
+                      " {"
+                    )),
+                  (t += e(n)),
+                  o && (t += "}"),
+                  n[2] && (t += "}"),
+                  n[4] && (t += "}"),
+                  t
+                );
+              }).join("");
+            }),
+            (n.i = function (e, t, o, r, a) {
+              "string" == typeof e && (e = [[null, e, void 0]]);
+              var i = {};
+              if (o)
+                for (var s = 0; s < this.length; s++) {
+                  var c = this[s][0];
+                  null != c && (i[c] = !0);
+                }
+              for (var d = 0; d < e.length; d++) {
+                var l = [].concat(e[d]);
+                (o && i[l[0]]) ||
+                  (void 0 !== a &&
+                    (void 0 === l[5] ||
+                      (l[1] = "@layer"
+                        .concat(l[5].length > 0 ? " ".concat(l[5]) : "", " {")
+                        .concat(l[1], "}")),
+                    (l[5] = a)),
+                  t &&
+                    (l[2]
+                      ? ((l[1] = "@media "
+                          .concat(l[2], " {")
+                          .concat(l[1], "}")),
+                        (l[2] = t))
+                      : (l[2] = t)),
+                  r &&
+                    (l[4]
+                      ? ((l[1] = "@supports ("
+                          .concat(l[4], ") {")
+                          .concat(l[1], "}")),
+                        (l[4] = r))
+                      : (l[4] = "".concat(r))),
+                  n.push(l));
+              }
+            }),
+            n
+          );
+        };
+      },
+      81: (e) => {
+        e.exports = function (e) {
+          return e[1];
+        };
+      },
+      379: (e) => {
+        var n = [];
+        function t(e) {
+          for (var t = -1, o = 0; o < n.length; o++)
+            if (n[o].identifier === e) {
+              t = o;
+              break;
+            }
+          return t;
+        }
+        function o(e, o) {
+          for (var a = {}, i = [], s = 0; s < e.length; s++) {
+            var c = e[s],
+              d = o.base ? c[0] + o.base : c[0],
+              l = a[d] || 0,
+              p = "".concat(d, " ").concat(l);
+            a[d] = l + 1;
+            var u = t(p),
+              b = {
+                css: c[1],
+                media: c[2],
+                sourceMap: c[3],
+                supports: c[4],
+                layer: c[5],
+              };
+            if (-1 !== u) n[u].references++, n[u].updater(b);
+            else {
+              var m = r(b, o);
+              (o.byIndex = s),
+                n.splice(s, 0, { identifier: p, updater: m, references: 1 });
+            }
+            i.push(p);
+          }
+          return i;
+        }
+        function r(e, n) {
+          var t = n.domAPI(n);
+          return (
+            t.update(e),
+            function (n) {
+              if (n) {
+                if (
+                  n.css === e.css &&
+                  n.media === e.media &&
+                  n.sourceMap === e.sourceMap &&
+                  n.supports === e.supports &&
+                  n.layer === e.layer
+                )
+                  return;
+                t.update((e = n));
+              } else t.remove();
+            }
+          );
+        }
+        e.exports = function (e, r) {
+          var a = o((e = e || []), (r = r || {}));
+          return function (e) {
+            e = e || [];
+            for (var i = 0; i < a.length; i++) {
+              var s = t(a[i]);
+              n[s].references--;
+            }
+            for (var c = o(e, r), d = 0; d < a.length; d++) {
+              var l = t(a[d]);
+              0 === n[l].references && (n[l].updater(), n.splice(l, 1));
+            }
+            a = c;
+          };
+        };
+      },
+      569: (e) => {
+        var n = {};
+        e.exports = function (e, t) {
+          var o = (function (e) {
+            if (void 0 === n[e]) {
+              var t = document.querySelector(e);
+              if (
+                window.HTMLIFrameElement &&
+                t instanceof window.HTMLIFrameElement
+              )
+                try {
+                  t = t.contentDocument.head;
+                } catch (e) {
+                  t = null;
+                }
+              n[e] = t;
+            }
+            return n[e];
+          })(e);
+          if (!o)
+            throw new Error(
+              "Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid."
+            );
+          o.appendChild(t);
+        };
+      },
+      216: (e) => {
+        e.exports = function (e) {
+          var n = document.createElement("style");
+          return e.setAttributes(n, e.attributes), e.insert(n, e.options), n;
+        };
+      },
+      565: (e, n, t) => {
+        e.exports = function (e) {
+          var n = t.nc;
+          n && e.setAttribute("nonce", n);
+        };
+      },
+      795: (e) => {
+        e.exports = function (e) {
+          var n = e.insertStyleElement(e);
+          return {
+            update: function (t) {
+              !(function (e, n, t) {
+                var o = "";
+                t.supports && (o += "@supports (".concat(t.supports, ") {")),
+                  t.media && (o += "@media ".concat(t.media, " {"));
+                var r = void 0 !== t.layer;
+                r &&
+                  (o += "@layer".concat(
+                    t.layer.length > 0 ? " ".concat(t.layer) : "",
+                    " {"
+                  )),
+                  (o += t.css),
+                  r && (o += "}"),
+                  t.media && (o += "}"),
+                  t.supports && (o += "}");
+                var a = t.sourceMap;
+                a &&
+                  "undefined" != typeof btoa &&
+                  (o +=
+                    "\n/*# sourceMappingURL=data:application/json;base64,".concat(
+                      btoa(unescape(encodeURIComponent(JSON.stringify(a)))),
+                      " */"
+                    )),
+                  n.styleTagTransform(o, e, n.options);
+              })(n, e, t);
+            },
+            remove: function () {
+              !(function (e) {
+                if (null === e.parentNode) return !1;
+                e.parentNode.removeChild(e);
+              })(n);
+            },
+          };
+        };
+      },
+      589: (e) => {
+        e.exports = function (e, n) {
+          if (n.styleSheet) n.styleSheet.cssText = e;
+          else {
+            for (; n.firstChild; ) n.removeChild(n.firstChild);
+            n.appendChild(document.createTextNode(e));
+          }
+        };
+      },
+    },
+    n = {};
+  function t(o) {
+    var r = n[o];
+    if (void 0 !== r) return r.exports;
+    var a = (n[o] = { id: o, exports: {} });
+    return e[o](a, a.exports, t), a.exports;
+  }
+  (t.n = (e) => {
+    var n = e && e.__esModule ? () => e.default : () => e;
+    return t.d(n, { a: n }), n;
+  }),
+    (t.d = (e, n) => {
+      for (var o in n)
+        t.o(n, o) &&
+          !t.o(e, o) &&
+          Object.defineProperty(e, o, { enumerable: !0, get: n[o] });
+    }),
+    (t.o = (e, n) => Object.prototype.hasOwnProperty.call(e, n)),
+    (() => {
+      class e {
+        static renderBooks(e) {
+          const n = document.querySelector(".book-container");
+          n.innerHTML = "";
+          let t = document.createDocumentFragment();
+          e.forEach(function (e, n) {
+            let o = document.createElement("div");
+            o.setAttribute("class", "book-card d-flex flex-column"),
+              o.setAttribute("data-index", n),
+              (o.innerHTML = `\n                <div class="book-title pt-3 px-2 fw-bold text-center lh-sm fs-5">${
+                e.bookName
+              }</div>\n                <div class="book-author pt-2 px-2 text-center">${
+                e.bookAuthor
+              }</div>\n                <div class="book-pages pt-1 px-2 text-center fst-italic  text-muted">${
+                e.bookPages
+              } pages</div>\n                <div class="book-options d-flex justify-content-between py-3">\n                    <span class="material-icons-outlined ms-3 read-mark">\n                        ${
+                e.bookRead ? "done" : "remove_red_eye"
+              }\n                    </span>                    \n                    <span class="material-icons-outlined me-3 delete">\n                        delete\n                    </span>\n                </div>`),
+              t.appendChild(o);
+          }),
+            n.appendChild(t);
+        }
+        static addBook(e, n) {
+          const t = document.querySelector(".book-container"),
+            o = document.createElement("div");
+          o.setAttribute("class", "book-card d-flex flex-column"),
+            0 === n.books.length && o.setAttribute("data-index", 0),
+            o.setAttribute("data-index", n.books.length),
+            (o.innerHTML = `\n                <div class="book-title pt-3 px-2 fw-bold text-center lh-sm fs-5">${
+              e.bookName
+            }</div>\n                <div class="book-author pt-2 px-2 text-center">${
+              e.bookAuthor
+            }</div>\n                <div class="book-pages pt-1 px-2 text-center fst-italic  text-muted">${
+              e.bookPages
+            } pages</div>\n                <div class="book-options d-flex justify-content-between py-3">\n                    <span class="material-icons-outlined ms-3 read-mark">\n                        ${
+              e.bookRead ? "done" : "remove_red_eye"
+            }\n                    </span>                    \n                    <span class="material-icons-outlined me-3 delete">\n                        delete\n                    </span>\n                </div>`),
+            t.appendChild(o);
+        }
+        static removeBook(n) {
+          document.querySelector(".book-container").removeChild(n),
+            e.updateIdx();
+        }
+        static updateBook(e) {
+          return "remove_red_eye" == e.innerText
+            ? void (e.innerText = "done")
+            : void (e.innerText = "remove_red_eye");
+        }
+        static showForm() {
+          document.querySelector(".form-container").classList.toggle("d-none");
+        }
+        static updateIdx() {
+          document
+            .querySelector(".book-container")
+            .querySelectorAll(".book-card")
+            .forEach(function (e, n) {
+              e.setAttribute("data-index", n);
+            });
+        }
+      }
+      class n {
+        constructor(e, n, t, o = !1) {
+          (this.bookName = e),
+            (this.bookAuthor = n),
+            (this.bookPages = t),
+            (this.bookRead = o);
+        }
+      }
+      var o = t(379),
+        r = t.n(o),
+        a = t(795),
+        i = t.n(a),
+        s = t(569),
+        c = t.n(s),
+        d = t(565),
+        l = t.n(d),
+        p = t(216),
+        u = t.n(p),
+        b = t(589),
+        m = t.n(b),
+        h = t(426),
+        x = {};
+      (x.styleTagTransform = m()),
+        (x.setAttributes = l()),
+        (x.insert = c().bind(null, "head")),
+        (x.domAPI = i()),
+        (x.insertStyleElement = u()),
+        r()(h.Z, x),
+        h.Z && h.Z.locals && h.Z.locals;
+      let f = new (class {
+        constructor() {
+          null === localStorage.getItem("library")
+            ? ((this.books = []),
+              localStorage.setItem("library", JSON.stringify(this.books)))
+            : (this.books = JSON.parse(localStorage.getItem("library")));
+        }
+        addBook(e) {
+          this.books.push(e),
+            localStorage.setItem("library", JSON.stringify(this.books));
+        }
+        removeBook(e) {
+          this.books.splice(e, 1),
+            localStorage.setItem("library", JSON.stringify(this.books));
+        }
+        updateBook(e) {
+          this.books[e].bookRead
+            ? (this.books[e].bookRead = !1)
+            : (this.books[e].bookRead = !0);
+        }
+      })();
+      const v = document.querySelector("#openForm"),
+        k = document.querySelector("#addBook"),
+        g = document.querySelector(".close-btn");
+      document.addEventListener("DOMContentLoaded", () => {
+        e.renderBooks(f.books);
+      }),
+        v.addEventListener("click", function () {
+          e.showForm();
+        }),
+        g.addEventListener("click", () => {
+          e.showForm();
+        }),
+        k.addEventListener("click", function () {
+          let t = document.querySelector("#bookName").value,
+            o = document.querySelector("#bookAuthor").value,
+            r = document.querySelector("#bookPages").value,
+            a = document.querySelector("#bookRead").checked,
+            i = new n(t, o, r, a);
+          e.addBook(i, f), f.addBook(i), e.showForm();
+        }),
+        document.addEventListener("click", (n) => {
+          if (n.target.classList.contains("delete")) {
+            let t = n.target.parentElement.parentElement;
+            e.removeBook(t), f.removeBook(t.getAttribute("data-index"));
+          }
+        }),
+        document.addEventListener("click", (n) => {
+          if (n.target.classList.contains("read-mark")) {
+            let t = n.target.parentElement.parentElement,
+              o = n.target;
+            e.updateBook(o), f.updateBook(t.getAttribute("data-index"));
+          }
+        });
+    })();
+})();
