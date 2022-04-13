@@ -1,9 +1,9 @@
 import { UI } from "./UI.js";
 import { Library } from "./Library.js";
 import { Book } from "./Book.js";
-import "./style.css";
-import gitHub from "./github.png";
-import librosApilados from "./libros-apilados.png";
+import "./assets/style/style.css";
+import gitHub from "./assets/static/github.png";
+import librosApilados from "./assets/static/libros-apilados.png";
 
 let library = new Library();
 // let UI = new UI();
